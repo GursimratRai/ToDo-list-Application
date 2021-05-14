@@ -24,7 +24,7 @@ app.set('views',path.join( __dirname,'views'));
 // Express In-Build Parser
 app.use(express.urlencoded());
 
-// Setting the Static Files
+// For Using the Static Files
 app.use(express.static('assets'));
 
 // Acquiring route

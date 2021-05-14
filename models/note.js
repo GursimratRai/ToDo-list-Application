@@ -12,12 +12,10 @@ const noteSchema = new mongoose.Schema({
         required:true
     },
     category:{
-        type : String,
-        required : true
+        type : String
     },
     priority : {
-        type : String ,
-        required : true
+        type : String 
     }
 });
 

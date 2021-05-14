@@ -17,14 +17,17 @@
 
         <!-- Main heading of the Page -->
         <div id='Main-header' >
-          <div>
-            <h1 id='header'>Things TO Do</h1>
+          <div class="text-white">
+            <h1 id='header'>Things To Do</h1>
           </div>
 
           <div>
-            <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#input-form">
+            <!-- button to delete the selected task -->
+            <button type="submit" class="btn btn-danger btn-lg" form="task-container" >
               <i class="fas fa-trash-alt"></i>
             </button>
+
+            <!-- button for add the new task -->
             <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#input-form">
                 <i class="fas fa-feather-alt"></i>
             </button>
@@ -53,30 +56,32 @@
                             </div>
         
                             <div class="form-group">
-                               <label for='date'>Date:</label><br>
+                               <label for='date'>Due Date:</label><br>
                                <input type='date' class="form-control" id='date'  name='date' required >
                             </div>
 
                             <div class="form-group d-flex" >
                               <div class="w-50 m-1">
                                 <label for="tag">Select Category:</label>
-                                <select class="form-control" id="tag" name='category' required>
+                                <select class="form-control" id="tag" name='category' >
+                                  <option value='hidden'selected>None</option> 
                                   <option value='home'>Home</option>
+                                  <option value='personal'>Personal</option>
                                   <option value='school'>School</option>
                                   <option value='office'>Office</option>
                                   <option value='medical'>Medical</option>
-                                  <option value='other'>Other</option>
                                 </select>
                               </div>
 
                               <div class="w-50 m-1">
                                 <label for="priority">Select Priority:</label>
-                                <select class="form-control" id="priority" name='priority' required>
+                                <select class="form-control" id="priority" name='priority'>
+                                  <option value="dark" selected>None</option> 
                                   <option value='primary' >Most Important</option>
                                   <option value='secondary' >Important</option>
                                   <option value='success' >Today</option>
                                   <option value='danger' >Tomorrow</option>
-                                  <option value='info' >Do It Later</option>
+                                  <option value='info' >Later</option>
                                 </select>
                               </div>
 
@@ -93,18 +98,21 @@
               </div>
         </div>
 
+
         <!-- Container for all the tasks-->
-        <div id="note-container" class="d-flex flex-wrap ">
+        <form action="/delete-note" id='task-container'>
+
+          <div id="note-container" class="d-flex flex-wrap ">
             <% for(let i of notes){ %>
-            <div class="w-100 m-2">
-              <div class="container-fluid border border-<%= i.priority %> text-<%= i.priority %>">
+            <div class="w-100 m-1">
+              <div class="container-fluid border border-<%= i.priority %> text-<%= i.priority %> ">
                 <div class="row">
-                  <div class="col-1 d-flex align-items-center justify-content-center">
-                    <input type="checkbox" name="id" value="<%= i._id %>">
+                  <div class="form-check col-sm-1 col-12 m-sm-0 m-2 d-flex align-items-center justify-content-center">
+                    <input class="form-check-input" type="checkbox" name="_id" value="<%= i._id %>">
                   </div>
-                  <div class="col-9 ">
+                  <div class="col-sm-9 col-12">
                     <div class="row">
-                      <p> <%= i.description %> </p>
+                      <h3> <%= i.description %> </h3>
                     </div>
 
                     <div class="row text-black-50" style=" opacity: 0.6;">
@@ -112,21 +120,23 @@
                     </div>
 
                   </div>
-                  <div class="col-2 bg-<%= i.priority %> text-capitalize text-white text-center d-flex align-items-center justify-content-center p-2 ">
-                    <div> <%= i.category %> </div> 
+                  <div style="visibility: <%= i.category %>;" class="col-sm-2 col-12 bg-<%= i.priority %> d-flex align-items-center justify-content-center text-uppercase text-white p-2 ">
+                      <%= i.category %> 
                   </div>
                 </div>
               </div>
             </div>
             <% } %>
-       </div>
+        </div>
+       </form>
+
 
         <!-- Including JQuery -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="/js/home.js"></script>
+        <script type="text/javascript" src="/js/home.js"></script>
     
     </body>
 </html>

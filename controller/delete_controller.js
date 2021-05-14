@@ -4,8 +4,8 @@ const Note = require('../models/note');
 module.exports.delete=function(req,res){
 
     let id = req.query.id;
-    console.log(id);
-    Note.findByIdAndDelete(id,function(err){
+    console.log(req.query);
+    Note.deleteMany(req.query,function(err){
     
         if(err){
             console.log(err);
