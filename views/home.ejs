@@ -4,6 +4,8 @@
            To Do List
         </title>
         
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico">
+
         <!-- link to bootstrap CDN -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         
@@ -23,7 +25,7 @@
 
           <div>
             <!-- button to delete the selected task -->
-            <button type="submit" class="btn btn-danger btn-lg" form="task-container" >
+            <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#delete" >
               <i class="fas fa-trash-alt"></i>
             </button>
 
@@ -37,11 +39,11 @@
 
         <!-- Input form for adding new task -->
         <div>
-            <div class="modal fade" id="input-form" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal fade" id="input-form" tabindex="-1" role="dialog" aria-labelledby="inputForm" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalCenterTitle">NEW TASK</h5>
+                      <h5 class="modal-title" id="inputForm">NEW TASK</h5>
                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                       </button>
@@ -98,36 +100,67 @@
               </div>
         </div>
 
+        <!-- Confirmation for Deleting the task/tasks -->
+
+        <div class="modal"  id="delete" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">           
+              <div class="modal-header">
+                <h5 class="modal-title">Delete all / selected Tasks ?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>   
+              <div class="modal-body">
+                <p>This action cannot be undone.</p>
+              </div>
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" form="task-container">Delete</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
 
         <!-- Container for all the tasks-->
         <form action="/delete-note" id='task-container'>
 
           <div id="note-container" class="d-flex flex-wrap ">
             <% for(let i of notes){ %>
-            <div class="w-100 m-1">
-              <div class="container-fluid border border-<%= i.priority %> text-<%= i.priority %> ">
-                <div class="row">
-                  <div class="form-check col-sm-1 col-12 m-sm-0 m-2 d-flex align-items-center justify-content-center">
-                    <input class="form-check-input" type="checkbox" name="_id" value="<%= i._id %>">
-                  </div>
-                  <div class="col-sm-9 col-12">
-                    <div class="row">
-                      <h3> <%= i.description %> </h3>
+              <div class="w-100 m-1">
+                <div class="container-fluid border border-<%= i.priority %> text-<%= i.priority %> ">
+                  <div class="row">
+                    <!-- checkbox of the task -->
+                    <div class="form-check col-sm-1 col-12 m-sm-0 m-2 d-flex align-items-center justify-content-center">
+                      <input class="form-check-input" type="checkbox" name="_id" value="<%= i._id %>">
+                    </div>
+                    
+                    <!-- description of the task -->
+                    <div class="col-sm-9 col-12">
+                      <div class="row">
+                        <h3> <%= i.description %> </h3>
+                      </div>
+
+                      <!-- date of the task -->
+                      <div class="row text-black-50" style=" opacity: 0.6;">
+                        <h6 class> <i class="fas fa-calendar-alt"></i> <%= i.date %> </h6>
+                      </div>
+
                     </div>
 
-                    <div class="row text-black-50" style=" opacity: 0.6;">
-                      <h6 class> <i class="fas fa-calendar-alt"></i> <%= i.date %> </h6>
+                    <!-- category of the task -->
+                    <div style="visibility: <%= i.category %>;" class="col-sm-2 col-12 bg-<%= i.priority %> d-flex align-items-center justify-content-center text-uppercase text-white p-2 ">
+                        <%= i.category %> 
                     </div>
 
-                  </div>
-                  <div style="visibility: <%= i.category %>;" class="col-sm-2 col-12 bg-<%= i.priority %> d-flex align-items-center justify-content-center text-uppercase text-white p-2 ">
-                      <%= i.category %> 
                   </div>
                 </div>
               </div>
-            </div>
             <% } %>
-        </div>
+         </div>
+
        </form>
 
 
